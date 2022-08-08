@@ -54,30 +54,30 @@ void initBoards()
   }
 
   // ESTO ES PARA DESARROLLO, EN PRODUCTION SE PONE SIMPLEMENTE EN 0
-  // for (int i = 0; i < LENGTH; i++)
-  // {
-  //   if (board[i] == 0)
-  //   {
-  //     showBoard[i] = "0";
-  //   }
-  //   else if (board[i] == 1)
-  //   {
-  //     showBoard[i] = "1";
-  //   }
-  //   else if (board[i] == 2)
-  //   {
-  //     showBoard[i] = "2";
-  //   }
-  //   else
-  //   {
-  //     showBoard[i] = "3";
-  //   }
-  // }
-
   for (int i = 0; i < LENGTH; i++)
   {
-    showBoard[i] = "0";
+    if (board[i] == 0)
+    {
+      showBoard[i] = "0";
+    }
+    else if (board[i] == 1)
+    {
+      showBoard[i] = "1";
+    }
+    else if (board[i] == 2)
+    {
+      showBoard[i] = "2";
+    }
+    else
+    {
+      showBoard[i] = "3";
+    }
   }
+
+  // for (int i = 0; i < LENGTH; i++)
+  // {
+  //   showBoard[i] = "0";
+  // }
 }
 
 void render()
@@ -90,6 +90,17 @@ void render()
     {
       printf("\x1b[31m+\x1b[0m\t");
     }
+    // else if (showBoard[i] == 4)
+    // {
+    //   printf("\t\x1b[36m*\x1b[0m");
+    // }
+    // else if (showBoard[i] == 5)
+    // {
+    //   printf("\t\x1b[32mX\x1b[0m");
+    // } else {
+    //   printf("\t0");
+    // }
+
     else
     {
       printf("%s\t", showBoard[i]);
@@ -116,13 +127,21 @@ void playAgain()
   render();
 }
 
-void renderWin()
+void renderOptions(int win)
 {
   int e = 0;
   bool selectedOption = false;
-
   system("cls");
-  printf("FELICIDADES HAS GANADO!!!\n");
+
+  if (win == 1)
+  {
+    printf("FELICIDADES HAS GANADO!!!\n");
+  }
+  else
+  {
+    printf("LOSER HAS PERDIDO\n");
+  }
+
   printf("\x1b[33m=>\x1b[0mJUGAR DE NUEVO\n");
   printf("  SALIR\n");
 
@@ -135,71 +154,44 @@ void renderWin()
       if (key == 'w')
       {
         e = 0;
-        printf("FELICIDADES HAS GANADO!!!\n");
+        if (win == 1)
+        {
+          printf("FELICIDADES HAS GANADO!!!\n");
+        }
+        else
+        {
+          printf("LOSER HAS PERDIDO\n");
+        }
+
         printf("\x1b[33m=>\x1b[0mJUGAR DE NUEVO\n");
         printf("  SALIR\n");
       }
       else if (key == 's')
       {
         e = 1;
-        printf("FELICIDADES HAS GANADO!!!\n");
+        if (win == 1)
+        {
+          printf("FELICIDADES HAS GANADO!!!\n");
+        }
+        else
+        {
+          printf("LOSER HAS PERDIDO\n");
+        }
         printf("  JUGAR DE NUEVO\n");
         printf("\x1b[33m=>\x1b[0mSALIR\r");
       }
-      else if (key == '\r' && e == 0)
+      else if (key == '\r')
       {
-        playAgain();
         selectedOption = true;
-      }
-      else if (key == '\r' && e == 1)
-      {
-        printf("ADIOS\n");
-        gameOver = true;
-        selectedOption = true;
-      }
-    }
-  }
-}
-
-void renderFail()
-{
-  int e = 0;
-  bool selectedOption = false;
-
-  system("cls");
-  printf("LOSER HAS PERDIDO\n");
-  printf("\x1b[33m=>\x1b[0mJUGAR DE NUEVO\n");
-  printf("  SALIR COMO UN BUEN PERDEDOR\n");
-  while (!selectedOption)
-  {
-    if (kbhit())
-    {
-      char key = getch();
-      system("cls");
-      if (key == 'w')
-      {
-        e = 0;
-        printf("LOSER HAS PERDIDO\n");
-        printf("\x1b[33m=>\x1b[0mJUGAR DE NUEVO\n");
-        printf("  SALIR COMO UN BUEN PERDEDOR\n");
-      }
-      else if (key == 's')
-      {
-        e = 1;
-        printf("LOSER HAS PERDIDO\n");
-        printf("  JUGAR DE NUEVO\n");
-        printf("\x1b[33m=>\x1b[0mSALIR COMO UN BUEN PERDEDOR\n");
-      }
-      else if (key == '\r' && e == 0)
-      {
-        playAgain();
-        selectedOption = true;
-      }
-      else if (key == '\r' && e == 1)
-      {
-        printf("ADIOS\n");
-        gameOver = true;
-        selectedOption = true;
+        if (e == 0)
+        {
+          playAgain();
+        }
+        else
+        {
+          printf("ADIOS\n");
+          gameOver = true;
+        }
       }
     }
   }
@@ -343,11 +335,11 @@ void main()
     inputCheck();
     if (hit == 3)
     {
-      renderWin();
+      renderOptions(1);
     }
     else if (tries == 10)
     {
-      renderFail();
+      renderOptions(0);
     }
   }
 }

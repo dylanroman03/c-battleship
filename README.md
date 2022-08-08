@@ -2,7 +2,7 @@
 Homework, battleshipt game in c
 
 ## Important
-this project was done in a Linux operating system (Arch Linux), so I compiled the code in Linux for Linux, the executable is in the ```builds folder```
+this project was done for Linux and Windows the executables are in the ```builds folder```
 ```bash
 Project Structure:
 .

@@ -68,14 +68,15 @@ void render()
     else if (board[i] == 5)
     {
       printf("\x1b[32mX\x1b[0m\t");
-      // } else {
-      //   printf("%d\t", board[i]);
-      // }
     }
     else
     {
-      printf("0\t");
+      printf("%d\t", board[i]);
     }
+    // else
+    // {
+    //   printf("0\t");
+    // }
 
     if ((i + 1) % ROW == 0)
     {
@@ -179,35 +180,22 @@ void shot()
 
   case 2:
     board[position] = 4;
-    if (board[position + ROW] == 2)
+    for (int i = position - ROW; i <= position + ROW; i = i + ROW)
     {
-      board[position + ROW] = 4;
-    }
-    else
-    {
-      board[position - ROW] = 4;
+      if (board[i] == 2)
+      {
+        board[i] = 4;
+      }
     }
     break;
 
   case 3:
-    board[position] = 4;
-    if (board[position - 1] == 3)
+    for (int i = position - 2; i < position + 3; i++)
     {
-      board[position - 1] = 4;
-
-      if (board[position - 2] == 3)
+      if (board[i] == 3)
       {
-        board[position - 2] = 4;
+        board[i] = 4;
       }
-      else
-      {
-        board[position + 1] = 4;
-      }
-    }
-    else
-    {
-      board[position + 1] = 4;
-      board[position + 2] = 4;
     }
     break;
 
@@ -228,7 +216,6 @@ void inputCheck()
   if (kbhit())
   {
     char key = getch();
-    // printf("%c", key);
     switch (key)
     {
     case 'd':
